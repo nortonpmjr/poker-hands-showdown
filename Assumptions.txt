@@ -33,6 +33,15 @@ the pot would be split.
 
 QS, 8S, KS, 7S, 3S
 
+Joe
+8S, 8D, AD, QD, JH 
+
+Bob
+AS, QS, 8S, 6S, 4S 
+
+Sally
+4S, 4H, 4H, QC, 8C
+
 
  diamonds (♦), clovers (♣), hearts (♥) and spades (♠)
 

@@ -7,22 +7,24 @@ namespace PokerHandShowdown
     {
         public String value;
         public String suit;
+        public int intValue;
 
         public Card(String value, String suit)
         {
             this.value = value;
             this.suit = suit;
+            this.intValue = 0;
         }
 
         public int CompareTo(Card other)
         {
-            int valueInt = ToInt(value);
+            this.intValue = ToInt(value);
             int otherValueInt = ToInt(other.value);
 
-            if (valueInt > otherValueInt)
+            if (intValue > otherValueInt)
             {
                 return 1;
-            } else if (otherValueInt > valueInt)
+            } else if (otherValueInt > intValue)
             {
                 return -1;
             } else
@@ -48,7 +50,7 @@ namespace PokerHandShowdown
                     return 11;
 
                 default:
-                    return Convert.ToInt32(value);
+                    return Convert.ToInt32(stringValue);
             }
 
         }

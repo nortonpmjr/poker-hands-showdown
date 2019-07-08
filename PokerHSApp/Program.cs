@@ -30,7 +30,29 @@ namespace PokerHSApp
                     ShowMenu(players: players);
                     break;
                 case "2":
-                    //PokerLibrary.EvaluateHand(players[0]);
+                    PokerLibrary.EvaluateHands(players);
+                    Player winner = players[0];
+                    for (int i = 1; i < players.Count; i++)
+                    {
+                        if (players[i].hand > winner.hand)
+                        {
+                            winner = players[i];
+                        } else if (players[i].hand == winner.hand)
+                        {
+                            if (winner.hand == Hand.Flush)
+                            {
+                                for (int j = 0; j < 5; j++)
+                                {
+                                    if (winner.cards[j].intValue < players[i].cards[j].intValue)
+                                    {
+                                        winner = players[i];
+                                        j = 5;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Console.WriteLine(winner.name);
                     break;
                 default:
                     ShowMenu(players: players);

@@ -1,7 +1,6 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
-
-// N player with 5 cards each
 
 namespace PokerHandShowdown
 {
@@ -28,7 +27,7 @@ namespace PokerHandShowdown
                 Player p = players[i];
                 if (VerifyFlush(p: players[i]))
                 {
-                    p.hand = Hand.Flush; 
+                    p.hand = Hand.Flush;
                 } else if (VerifyThreeOfAKind(p: players[i]))
                 {
                     p.hand = Hand.ThreeOfAKind;
@@ -36,6 +35,8 @@ namespace PokerHandShowdown
                 {
                     p.hand = Hand.OnePair;
                 }
+
+                Console.WriteLine("Player: " + p.name + " has a " + p.hand.ToString());
 
                 players[i] = p;
             }
@@ -49,7 +50,6 @@ namespace PokerHandShowdown
             // Is Flush?
             for (int i = 1; i < p.cards.Count; i++)
             {
-                //Console.WriteLine("Suit = " + suit + " and next suit = " + player.cards[i].suit);
                 isFlush = p.cards[i].suit.ToUpper() == suit;
             }
 
@@ -58,32 +58,21 @@ namespace PokerHandShowdown
 
         static private bool VerifyThreeOfAKind(Player p)
         {
-            bool isFlush = true;
-            String suit = p.cards[0].suit;
+            bool isThreeOfAKind = true;
 
-            // Is Flush?
-            for (int i = 1; i < p.cards.Count; i++)
-            {
-                //Console.WriteLine("Suit = " + suit + " and next suit = " + player.cards[i].suit);
-                isFlush = p.cards[i].suit.ToUpper() == suit;
-            }
+            var cardsValue = p.cards.Select(x => x.value);
+            isThreeOfAKind = cardsValue.GroupBy(x => x).Any(g => g.Count() == 3);
 
-            return isFlush;
+            return isThreeOfAKind;
         }
 
         static private bool VerifyPair(Player p)
         {
-            bool isFlush = true;
-            String suit = p.cards[0].suit;
+            bool isPair = true;
+            var cardsValue = p.cards.Select(x => x.value);
+            isPair = cardsValue.GroupBy(x => x).Any(g => g.Count() == 2);
 
-            // Is Flush?
-            for (int i = 1; i < p.cards.Count; i++)
-            {
-                //Console.WriteLine("Suit = " + suit + " and next suit = " + player.cards[i].suit);
-                isFlush = p.cards[i].suit.ToUpper() == suit;
-            }
-
-            return isFlush;
+            return isPair;
         }
     }
 }
