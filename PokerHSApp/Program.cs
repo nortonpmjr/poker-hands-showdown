@@ -26,10 +26,11 @@ namespace PokerHSApp
                 case "1":
                     Console.Clear();
                     players.Add(PokerLibrary.AddPlayer());
-
+                    
                     ShowMenu(players: players);
                     break;
                 case "2":
+                    //PokerLibrary.EvaluateHand(players[0]);
                     break;
                 default:
                     ShowMenu(players: players);
