@@ -63,6 +63,35 @@ namespace PokerHandShowdown
             var cardsValue = p.cards.Select(x => x.value);
             isThreeOfAKind = cardsValue.GroupBy(x => x).Any(g => g.Count() == 3);
 
+            Dictionary<int, int> repeatingValue = new Dictionary<int, int>();
+
+            for (int i = 0; i < p.cards.Count; i++)
+            {
+                if (repeatingValue.ContainsKey(p.cards[i].intValue))
+                {
+                    repeatingValue[p.cards[i].intValue] += 1;
+                } else
+                {
+                    repeatingValue.Add(p.cards[i].intValue, 1);
+                }
+            }
+
+            List<Card> repeatingCards = new List<Card>();
+
+            for (int i = 0; i < p.cards.Count; i++)
+            {
+                int tmpValue = p.cards[i].intValue;
+                if (repeatingValue.ContainsKey(tmpValue))
+                {
+                    if (repeatingValue[tmpValue] == 3)
+                    {
+                        repeatingCards.Add(p.cards[i]);
+                    }
+                }
+            }
+
+            p.repeatingCards = repeatingCards;
+
             return isThreeOfAKind;
         }
 

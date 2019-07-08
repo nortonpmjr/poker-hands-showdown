@@ -10,6 +10,7 @@ namespace PokerHandShowdown
 
        public List<Card> cards;
        public Hand hand;
+       public List<Card> repeatingCards;
 
        public Player(String name)
         {
@@ -17,6 +18,7 @@ namespace PokerHandShowdown
             this.cardsString = "";
             this.hand = Hand.HigherCard;
             this.cards = new List<Card>();
+            this.repeatingCards = new List<Card>();
         }
 
         public void SortCards()
