@@ -1,0 +1,1 @@
+﻿1. The user should enter the cards in one input or more?
