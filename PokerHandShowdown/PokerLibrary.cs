@@ -42,7 +42,7 @@ namespace PokerHandShowdown
             }
         }
 
-        public void ShowWinner(List<Player> players)
+        public List<Player> ShowWinner(List<Player> players)
         {
             Player winner = players[0];
 
@@ -71,7 +71,7 @@ namespace PokerHandShowdown
                                     winners.Add(winner);
                                     j = 5;
                                 }
-                                else if (j == 4)
+                                else if (j == 4 && !winner.Equals(players[i]))
                                 {
                                     winners.Add(players[i]);
                                 }
@@ -182,6 +182,8 @@ namespace PokerHandShowdown
             {
                 Console.WriteLine(winner.name + " is the winner");
             }
+
+            return winners;
         }
 
         public bool RepeatingCardAreEqual(Player lhs, Player rhs)

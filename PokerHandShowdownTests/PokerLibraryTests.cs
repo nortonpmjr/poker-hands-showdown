@@ -20,7 +20,8 @@ namespace Tests
             Assert.AreEqual(players[2].hand, Hand.Flush);
             Assert.AreEqual(players[3].hand, Hand.ThreeOfAKind);
 
-            library.ShowWinner(players);
+            List<Player> winners = library.ShowWinner(players);
+            Assert.AreEqual(winners[0], players[2]);
         }
 
         [Test]
@@ -46,7 +47,7 @@ namespace Tests
         {
             Player p = factory.CreateSinglePlayer();
 
-            library.VerifyThreeOfAKind(p);
+            _ = library.VerifyThreeOfAKind(p);
 
             Card one = new Card(value: "A", suit: "S");
             Card two = new Card(value: "A", suit: "C");
@@ -60,7 +61,9 @@ namespace Tests
         [Test]
         public void TestVerifyPair()
         {
-            Player p = factory.CreateSinglePlayer();
+            Player p = new Player("zelda");
+            p.cardsString = "AS, AC, 9D, 8C, 4C";
+            p.SortCards();
 
             library.VerifyPair(p);
 
