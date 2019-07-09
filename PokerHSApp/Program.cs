@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using PokerHandShowdown;
-
-namespace PokerHSApp
+﻿namespace PokerHSApp
 {
     class Program
     {
