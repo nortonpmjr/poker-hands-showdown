@@ -1,5 +1,4 @@
-﻿using System;
-namespace PokerHandShowdown
+﻿namespace PokerHandShowdown
 {
     public enum Hand
     {

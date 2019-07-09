@@ -6,7 +6,7 @@ namespace PokerHandShowdown
 {
     public class PokerLibrary
     {
-        static public Player AddPlayer()
+        public Player AddPlayer()
         {
 
             Console.WriteLine("Enter player name: ");
@@ -20,7 +20,7 @@ namespace PokerHandShowdown
             return player;
         }
 
-        static public void EvaluateHands(List<Player> players)
+        public void EvaluateHands(List<Player> players)
         {
             for (int i = 0; i < players.Count; i++)
             {
@@ -42,7 +42,7 @@ namespace PokerHandShowdown
             }
         }
 
-        static public void ShowWinner(List<Player> players)
+        public void ShowWinner(List<Player> players)
         {
             Player winner = players[0];
 
@@ -59,26 +59,9 @@ namespace PokerHandShowdown
                 }
                 else if (players[i].hand == winner.hand)
                 {
-                    if (winner.hand == Hand.Flush)
+                    switch (winner.hand)
                     {
-                        for (int j = 0; j < 5; j++)
-                        {
-                            if (winner.cards[j].intValue < players[i].cards[j].intValue)
-                            {
-                                winner = players[i];
-                                winners.Clear();
-                                winners.Add(winner);
-                                j = 5;
-                            }
-                            else if (j == 4)
-                            {
-                                winners.Add(players[i]);
-                            }
-                        }
-                    } else if (winner.hand == Hand.ThreeOfAKind)
-                    {
-                        if (RepeatingCardAreEqual(winner, players[i]))
-                        {
+                        case Hand.Flush:
                             for (int j = 0; j < 5; j++)
                             {
                                 if (winner.cards[j].intValue < players[i].cards[j].intValue)
@@ -87,30 +70,87 @@ namespace PokerHandShowdown
                                     winners.Clear();
                                     winners.Add(winner);
                                     j = 5;
-                                } else if (j == 4 && !winner.Equals(players[i]) && winner.cards != players[i].cards)
+                                }
+                                else if (j == 4)
                                 {
                                     winners.Add(players[i]);
                                 }
                             }
-                        } else {
-                            for (int j = 0; j < 3; j++)
-                            {
-                                int playerCardValue = players[i].repeatingCards[j].intValue;
-                                int winnerCardValue = winner.repeatingCards[j].intValue;
 
-                                if (winnerCardValue < playerCardValue)
+                            break;
+                        case Hand.ThreeOfAKind:
+                            if (RepeatingCardAreEqual(winner, players[i]))
+                            {
+                                for (int j = 0; j < 5; j++)
                                 {
-                                    winner = players[i];
-                                    winners.Clear();
-                                    winners.Add(winner);
-                                    j = 3;
+                                    if (winner.cards[j].intValue < players[i].cards[j].intValue)
+                                    {
+                                        winner = players[i];
+                                        winners.Clear();
+                                        winners.Add(winner);
+                                        j = 5;
+                                    }
+                                    else if (j == 4 && !winner.Equals(players[i]) && winner.cards != players[i].cards)
+                                    {
+                                        winners.Add(players[i]);
+                                    }
                                 }
                             }
-                        }
-                    } else if (winner.hand == Hand.OnePair)
-                    {
-                        if (RepeatingCardAreEqual(winner, players[i]))
-                        {
+                            else
+                            {
+                                for (int j = 0; j < 3; j++)
+                                {
+                                    int playerCardValue = players[i].repeatingCards[j].intValue;
+                                    int winnerCardValue = winner.repeatingCards[j].intValue;
+
+                                    if (winnerCardValue < playerCardValue)
+                                    {
+                                        winner = players[i];
+                                        winners.Clear();
+                                        winners.Add(winner);
+                                        j = 3;
+                                    }
+                                }
+                            }
+
+                            break;
+                        case Hand.OnePair:
+                            if (RepeatingCardAreEqual(winner, players[i]))
+                            {
+                                for (int j = 0; j < 5; j++)
+                                {
+                                    if (winner.cards[j].intValue < players[i].cards[j].intValue)
+                                    {
+                                        winner = players[i];
+                                        winners.Clear();
+                                        winners.Add(winner);
+                                        j = 5;
+                                    }
+                                    else if (j == 4 && !winner.Equals(players[i]) && winner.cards != players[i].cards)
+                                    {
+                                        winners.Add(players[i]);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                for (int j = 0; j < 2; j++)
+                                {
+                                    int playerCardValue = players[i].repeatingCards[j].intValue;
+                                    int winnerCardValue = winner.repeatingCards[j].intValue;
+
+                                    if (winnerCardValue < playerCardValue)
+                                    {
+                                        winner = players[i];
+                                        winners.Clear();
+                                        winners.Add(winner);
+                                        j = 2;
+                                    }
+                                }
+                            }
+
+                            break;
+                        case Hand.HigherCard:
                             for (int j = 0; j < 5; j++)
                             {
                                 if (winner.cards[j].intValue < players[i].cards[j].intValue)
@@ -118,43 +158,14 @@ namespace PokerHandShowdown
                                     winner = players[i];
                                     winners.Clear();
                                     winners.Add(winner);
-                                    j = 5;
-                                } else if (j == 4 && !winner.Equals(players[i]) && winner.cards != players[i].cards)
+                                }
+                                else if (j == 4 && !winner.Equals(players[i]) && winner.cards == players[i].cards)
                                 {
                                     winners.Add(players[i]);
                                 }
                             }
-                        }
-                        else
-                        {
-                            for (int j = 0; j < 2; j++)
-                            {
-                                int playerCardValue = players[i].repeatingCards[j].intValue;
-                                int winnerCardValue = winner.repeatingCards[j].intValue;
 
-                                if (winnerCardValue < playerCardValue)
-                                {
-                                    winner = players[i];
-                                    winners.Clear();
-                                    winners.Add(winner);
-                                    j = 2;
-                                }
-                            }
-                        }
-                    } else if (winner.hand == Hand.HigherCard)
-                    {
-                        for(int j = 0; j < 5; j++)
-                        {
-                            if (winner.cards[j].intValue < players[i].cards[j].intValue)
-                            {
-                                winner = players[i];
-                                winners.Clear();
-                                winners.Add(winner);
-                            } else if (j == 4 && !winner.Equals(players[i]) && winner.cards == players[i].cards)
-                            {
-                                winners.Add(players[i]);
-                            }
-                        }
+                            break;
                     }
                 }
             }
@@ -173,7 +184,7 @@ namespace PokerHandShowdown
             }
         }
 
-        static public bool RepeatingCardAreEqual(Player lhs, Player rhs)
+        public bool RepeatingCardAreEqual(Player lhs, Player rhs)
         {
             bool isEqual = true;
             for (int i = 0; i < lhs.repeatingCards.Count; i++)
@@ -184,12 +195,11 @@ namespace PokerHandShowdown
             return isEqual;
         }
 
-        static public bool VerifyFlush(Player p)
+        public bool VerifyFlush(Player p)
         {
             bool isFlush = true;
             String suit = p.cards[0].suit;
 
-            // Is Flush?
             for (int i = 0; i < p.cards.Count; i++)
             {
                 isFlush = p.cards[i].suit.ToUpper() == suit;
@@ -202,7 +212,7 @@ namespace PokerHandShowdown
             return isFlush;
         }
 
-        static public bool VerifyThreeOfAKind(Player p)
+        public bool VerifyThreeOfAKind(Player p)
         {
             bool isThreeOfAKind = true;
 
@@ -216,7 +226,7 @@ namespace PokerHandShowdown
             return isThreeOfAKind;
         }
 
-        static public bool VerifyPair(Player p)
+        public bool VerifyPair(Player p)
         {
             bool isPair = true;
             var cardsValue = p.cards.Select(x => x.value);
@@ -229,7 +239,7 @@ namespace PokerHandShowdown
             return isPair;
         }
 
-        static public Dictionary<int, int> FindRepeatedValues(Player p)
+        public Dictionary<int, int> FindRepeatedValues(Player p)
         {
             Dictionary<int, int> repeatedValues = new Dictionary<int, int>();
 
@@ -248,7 +258,7 @@ namespace PokerHandShowdown
             return repeatedValues;
         }
 
-        static public void PopulatePlayerRepeatingCards(Player p, Dictionary<int, int> repeatedValues, int repetetions)
+        public void PopulatePlayerRepeatingCards(Player p, Dictionary<int, int> repeatedValues, int repetetions)
         {
             for (int i = 0; i < p.cards.Count; i++)
             {
