@@ -4,13 +4,8 @@ using System.Collections.Generic;
 
 namespace Tests
 {
-    public class Tests
+    public class PokerLibraryTests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void TestPlayerHandSorting()
         {
@@ -124,6 +119,22 @@ namespace Tests
             PokerLibrary.ShowWinner(players);
         }
 
+        [Test]
+        public void TestHigherOrderTie()
+        {
+            List<Player> players = CreateHigherOrderTiePlayers();
+            PokerLibrary.EvaluateHands(players);
+            PokerLibrary.ShowWinner(players);
+        }
+
+        [Test]
+        public void TestHigherOrder()
+        {
+            List<Player> players = CreateHigherOrder();
+            PokerLibrary.EvaluateHands(players);
+            PokerLibrary.ShowWinner(players);
+        }
+
         private List<Player> CreateThreeOFAKindPlayers()
         {
             List<Player> players = new List<Player>();
@@ -178,6 +189,40 @@ namespace Tests
 
             Player sally = new Player("sally");
             sally.cardsString = "4S, 4H, 3H, QC, 8C";
+            sally.SortCards();
+
+            players.Add(joe);
+            players.Add(sally);
+
+            return players;
+        }
+
+        private List<Player> CreateHigherOrderTiePlayers()
+        {
+            List<Player> players = new List<Player>();
+            Player joe = new Player("joe");
+            joe.cardsString = "4S, 2D, 3H, QC, 8C";
+            joe.SortCards();
+
+            Player sally = new Player("sally");
+            sally.cardsString = "4S, 2D, 3H, QC, 8C";
+            sally.SortCards();
+
+            players.Add(joe);
+            players.Add(sally);
+
+            return players;
+        }
+
+        private List<Player> CreateHigherOrder()
+        {
+            List<Player> players = new List<Player>();
+            Player joe = new Player("joe");
+            joe.cardsString = "4S, 2D, 3H, QC, 8C";
+            joe.SortCards();
+
+            Player sally = new Player("sally");
+            sally.cardsString = "4S, 2D, 3H, QC, AC";
             sally.SortCards();
 
             players.Add(joe);

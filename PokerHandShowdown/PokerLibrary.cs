@@ -87,7 +87,7 @@ namespace PokerHandShowdown
                                     winners.Clear();
                                     winners.Add(winner);
                                     j = 5;
-                                } else if (j == 4 && winner.cards != players[i].cards)
+                                } else if (j == 4 && !winner.Equals(players[i]) && winner.cards != players[i].cards)
                                 {
                                     winners.Add(players[i]);
                                 }
@@ -119,7 +119,7 @@ namespace PokerHandShowdown
                                     winners.Clear();
                                     winners.Add(winner);
                                     j = 5;
-                                } else if (j == 4 && winner.cards != players[i].cards)
+                                } else if (j == 4 && !winner.Equals(players[i]) && winner.cards != players[i].cards)
                                 {
                                     winners.Add(players[i]);
                                 }
@@ -139,6 +139,20 @@ namespace PokerHandShowdown
                                     winners.Add(winner);
                                     j = 2;
                                 }
+                            }
+                        }
+                    } else if (winner.hand == Hand.HigherCard)
+                    {
+                        for(int j = 0; j < 5; j++)
+                        {
+                            if (winner.cards[j].intValue < players[i].cards[j].intValue)
+                            {
+                                winner = players[i];
+                                winners.Clear();
+                                winners.Add(winner);
+                            } else if (j == 4 && !winner.Equals(players[i]) && winner.cards == players[i].cards)
+                            {
+                                winners.Add(players[i]);
                             }
                         }
                     }

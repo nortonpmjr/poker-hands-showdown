@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PokerHandShowdown
 {
-    public struct Player
+    public struct Player: IEquatable<Player>
     {
        public String name;
        public String cardsString;
@@ -39,6 +39,11 @@ namespace PokerHandShowdown
                 }
             }
             cards.Sort();
+        }
+
+        public bool Equals(Player other)
+        {
+            return cards == other.cards && name == other.name;
         }
     }
 }
