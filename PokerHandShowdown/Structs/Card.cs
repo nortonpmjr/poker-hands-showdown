@@ -7,18 +7,21 @@ namespace PokerHandShowdown
     {
         public String value;
         public String suit;
-        public int intValue;
+        public int intValue
+        {
+            get { return ToInt(this.value); }
+            set { intValue = value; }
+        }
 
         public Card(String value, String suit)
         {
             this.value = value;
             this.suit = suit;
-            this.intValue = 0;
         }
 
         public int CompareTo(Card other)
         {
-            this.intValue = ToInt(value);
+            //this.intValue = ToInt(value);
             int otherValueInt = ToInt(other.value);
 
             if (intValue > otherValueInt)
