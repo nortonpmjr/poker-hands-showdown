@@ -1,38 +1,7 @@
 ﻿1. The user should enter the cards in one input or more?
 
 
-
-
-//// RULES ////
-
-Flush
-A flush is any hand with five cards of the same suit. If two or more players hold a flush, 
-the flush with the highest card wins. 
-If more than one player has the same strength high card, then the strength of the 
-second highest card held wins. 
-This continues through the five highest cards in the player's hands.
-
-Three of a Kind
-If more than one player holds three of a kind, 
-then the higher value of the cards used to make the three of kind determines the winner. 
-If two or more players have the same three of a kind, 
-then a fourth card (and a fifth if necessary) can be used as kickers to determine the winner.
-
-One Pair
-If two or more players hold a single pair, then highest pair wins. 
-If the pairs are of the same value, the highest kicker card determines the winner. 
-A second and even third kicker can be used if necessary.
-
-High Card
-When no player has even a pair, then the highest card wins.
- When both players have identical high cards, the next highest card wins,
- and so on until five cards have been used.
- In the unusual circumstance that two players hold the identical five cards,
-the pot would be split.
-
-
-QS, 8S, KS, 7S, 3S
-
+Test Subjects
 Joe
 8S, 8D, AD, QD, JH
 
@@ -46,9 +15,7 @@ Sally
 4S, 4H, 4H, QC, 8C
 
 
- diamonds (♦), clovers (♣), hearts (♥) and spades (♠)
-
-
+For simplificaton, Ace value is considered the higher.
 
  Cards ranked high to low - 
  A (Ace) 14, 
@@ -57,8 +24,8 @@ Sally
  J (Jack) 11, 
  10, 9, 8, 7, 6, 5, 4, 3, 2.
 
-CORNER CASES
+POSSIBLE CORNER CASES
 
-1) if has more than one pair, which pair is higher
-2) More than one winner
-3) which is the pair value
+1) if has more than one pair, which pair is higher --> Not covered, Two pair case.
+2) More than one winner --> Difficult to cover depending on situation (One pair)
+3) which is the pair value --> Solved using link and for loops
