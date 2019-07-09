@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PokerHandShowdown
 {
-    public struct Card: IComparable<Card>
+    public struct Card: IComparable<Card>, IEquatable<Card>
     {
         public String value;
         public String suit;
@@ -21,19 +21,17 @@ namespace PokerHandShowdown
 
         public int CompareTo(Card other)
         {
-            //this.intValue = ToInt(value);
-            int otherValueInt = ToInt(other.value);
-
-            if (intValue > otherValueInt)
+            if (intValue > other.intValue)
             {
                 return 1;
-            } else if (otherValueInt > intValue)
+            }
+
+            if (other.intValue > intValue)
             {
                 return -1;
-            } else
-            {
-                return 0;
             }
+
+            return 0;
         }
 
         private int ToInt(String stringValue)
@@ -56,6 +54,11 @@ namespace PokerHandShowdown
                     return Convert.ToInt32(stringValue);
             }
 
+        }
+
+        public bool Equals(Card other)
+        {
+            return intValue == other.intValue;
         }
     }
 }

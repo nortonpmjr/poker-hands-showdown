@@ -77,22 +77,74 @@ namespace PokerHandShowdown
                         }
                     } else if (winner.hand == Hand.ThreeOfAKind)
                     {
-                        for(int j = 0; j < 3; j++)
+                        if (RepeatingCardAreEqual(winner, players[i]))
                         {
-                            if (winner.repeatingCards[j].intValue < players[i].repeatingCards[j].intValue)
+                            for (int j = 0; j < 5; j++)
                             {
-                                winner = players[i];
-                                winners.Clear();
-                                winners.Add(winner);
-                                j = 3;
-                            } else if (j == 2)
+                                if (winner.cards[j].intValue < players[i].cards[j].intValue)
+                                {
+                                    winner = players[i];
+                                    winners.Clear();
+                                    winners.Add(winner);
+                                    j = 5;
+                                } else if (j == 4 && winner.cards != players[i].cards)
+                                {
+                                    winners.Add(players[i]);
+                                }
+                            }
+                        } else {
+                            for (int j = 0; j < 3; j++)
                             {
-                                winners.Add(players[i]);
+                                int playerCardValue = players[i].repeatingCards[j].intValue;
+                                int winnerCardValue = winner.repeatingCards[j].intValue;
+
+                                if (winnerCardValue < playerCardValue)
+                                {
+                                    winner = players[i];
+                                    winners.Clear();
+                                    winners.Add(winner);
+                                    j = 3;
+                                }
+                            }
+                        }
+                    } else if (winner.hand == Hand.OnePair)
+                    {
+                        if (RepeatingCardAreEqual(winner, players[i]))
+                        {
+                            for (int j = 0; j < 5; j++)
+                            {
+                                if (winner.cards[j].intValue < players[i].cards[j].intValue)
+                                {
+                                    winner = players[i];
+                                    winners.Clear();
+                                    winners.Add(winner);
+                                    j = 5;
+                                } else if (j == 4 && winner.cards != players[i].cards)
+                                {
+                                    winners.Add(players[i]);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int j = 0; j < 2; j++)
+                            {
+                                int playerCardValue = players[i].repeatingCards[j].intValue;
+                                int winnerCardValue = winner.repeatingCards[j].intValue;
+
+                                if (winnerCardValue < playerCardValue)
+                                {
+                                    winner = players[i];
+                                    winners.Clear();
+                                    winners.Add(winner);
+                                    j = 2;
+                                }
                             }
                         }
                     }
                 }
             }
+
             if (winners.Count > 1)
             {
                 Console.WriteLine("It's a Tie!");
@@ -107,15 +159,30 @@ namespace PokerHandShowdown
             }
         }
 
-        static private bool VerifyFlush(Player p)
+        static public bool RepeatingCardAreEqual(Player lhs, Player rhs)
+        {
+            bool isEqual = true;
+            for (int i = 0; i < lhs.repeatingCards.Count; i++)
+            {
+                isEqual = lhs.repeatingCards[i].intValue == rhs.repeatingCards[i].intValue;
+            }
+
+            return isEqual;
+        }
+
+        static public bool VerifyFlush(Player p)
         {
             bool isFlush = true;
             String suit = p.cards[0].suit;
 
             // Is Flush?
-            for (int i = 1; i < p.cards.Count; i++)
+            for (int i = 0; i < p.cards.Count; i++)
             {
                 isFlush = p.cards[i].suit.ToUpper() == suit;
+                if (!isFlush)
+                {
+                    return false;
+                }
             }
 
             return isFlush;

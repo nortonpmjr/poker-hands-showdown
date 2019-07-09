@@ -28,8 +28,15 @@ namespace PokerHandShowdown
             for (int i = 0; i < splittedCards.Length; i++)
             {
                 Char[] cardArray = splittedCards[i].ToCharArray();
-                cards.Add(new Card(value: cardArray[0].ToString(),
-                          suit: cardArray[1].ToString()));
+                if (cardArray.Length == 2)
+                {
+                    cards.Add(new Card(value: cardArray[0].ToString(),
+                        suit: cardArray[1].ToString()));
+                } else
+                {
+                    cards.Add(new Card(cardArray[0].ToString() + cardArray[1].ToString(),
+                               cardArray[2].ToString()));
+                }
             }
             cards.Sort();
         }

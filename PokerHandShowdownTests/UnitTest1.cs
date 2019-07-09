@@ -26,6 +26,17 @@ namespace Tests
         }
 
         [Test]
+        public void TestVerifyFlush()
+        {
+            Player zelda = new Player("zelda");
+            zelda.cardsString = "AS, AD, AC, 6D, 4C";
+            zelda.SortCards();
+
+            bool isFlush = PokerLibrary.VerifyFlush(zelda);
+            Assert.IsFalse(isFlush);
+        }
+
+        [Test]
         public void TestThreeOfaKindComparsion()
         {
             List<Player> players = CreateThreeOFAKindPlayers();
@@ -94,16 +105,35 @@ namespace Tests
             Assert.IsNotEmpty(p.repeatingCards);
         }
 
+        [Test]
+        public void TestRepeatingCardsAreEqual()
+        {
+            List<Player> players = CreateThreeOFAKindPlayers();
+            PokerLibrary.EvaluateHands(players);
+            _ = PokerLibrary.VerifyThreeOfAKind(players[0]);
+            _ = PokerLibrary.VerifyThreeOfAKind(players[1]);
+
+            Assert.True(PokerLibrary.RepeatingCardAreEqual(players[0], players[1]));
+        }
+
+        [Test]
+        public void TestTie()
+        {
+            List<Player> players = CreateTiePlayers();
+            PokerLibrary.EvaluateHands(players);
+            PokerLibrary.ShowWinner(players);
+        }
+
         private List<Player> CreateThreeOFAKindPlayers()
         {
             List<Player> players = new List<Player>();
 
             Player zelda = new Player("zelda");
-            zelda.cardsString = "AS, AS, AS, 6D, 4C";
+            zelda.cardsString = "AS, AD, AC, 6D, 4H";
             zelda.SortCards();
 
             Player sally = new Player("sally");
-            sally.cardsString = "10S, 10D, 10C, QC, 8D";
+            sally.cardsString = "AS, AD, AC, QC, 8D";
             sally.SortCards();
 
             players.Add(zelda);
@@ -134,6 +164,23 @@ namespace Tests
             players.Add(joe);
             players.Add(bob);
             players.Add(zelda);
+            players.Add(sally);
+
+            return players;
+        }
+
+        private List<Player> CreateTiePlayers()
+        {
+            List<Player> players = new List<Player>();
+            Player joe = new Player("joe");
+            joe.cardsString = "4S, 4H, 3H, QC, 8C";
+            joe.SortCards();
+
+            Player sally = new Player("sally");
+            sally.cardsString = "4S, 4H, 3H, QC, 8C";
+            sally.SortCards();
+
+            players.Add(joe);
             players.Add(sally);
 
             return players;
